@@ -16,6 +16,9 @@ import { ConnectedRouter } from 'connected-react-router/immutable';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+
 // Import root app
 import App from 'containers/App';
 
@@ -38,13 +41,17 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
+const client = new ApolloClient();
+
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <ApolloProvider client={client}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </ApolloProvider>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,

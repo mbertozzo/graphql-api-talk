@@ -13,13 +13,34 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-/* eslint-disable react/prefer-stateless-function */
-export default class HomePage extends React.PureComponent {
-  render() {
-    return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
-    );
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const _getPosts = gql `
+  query {
+    posts {
+      title
+      author {
+        firstName
+      }
+    }
   }
-}
+`;
+
+/* eslint-disable react/prefer-stateless-function */
+const HomePage = () => (
+  <Query query={_getPosts}>
+    {({ loading, error, data }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+
+      return (
+        <div>
+          {data.posts.map((post, key) => <p {...{key}}>{post.title}</p>)}
+        </div>
+      );
+    }}
+  </Query>
+);
+
+export default HomePage;

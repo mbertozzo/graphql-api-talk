@@ -3,6 +3,17 @@
 const express = require('express');
 const logger = require('./logger');
 
+const ApolloServer = require('apollo-server-express').ApolloServer;
+const gql = require('apollo-server-express').gql;
+
+const faker = require('faker');
+const times = require('lodash').times;
+const random = require('lodash').random;
+
+const typeDefs = require('./api/gql/schema');
+const resolvers = require('./api/gql/resolvers');
+const db = require('./api/models');
+
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
@@ -12,7 +23,15 @@ const ngrok =
     ? require('ngrok')
     : false;
 const { resolve } = require('path');
+
+const server = new ApolloServer({
+  typeDefs: gql(typeDefs),
+  resolvers,
+  context: { db }
+})
+
 const app = express();
+server.applyMiddleware({ app });
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
@@ -35,22 +54,42 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
-// Start your app.
-app.listen(port, host, async err => {
-  if (err) {
-    return logger.error(err.message);
-  }
+// set force: false to prevent sequelize from dropping
+// existing tables
+db.sequelize.sync({ force: true }).then(() => {
+  // populate author table with dummy data
+  db.author.bulkCreate(
+    times(10, () => ({
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName()
+    }))
+  );
+  // populate post table with dummy data
+  db.post.bulkCreate(
+    times(10, () => ({
+      title: faker.lorem.sentence(),
+      content: faker.lorem.paragraph(),
+      authorId: random(1, 10)
+    }))
+  );
 
-  // Connect to ngrok in dev mode
-  if (ngrok) {
-    let url;
-    try {
-      url = await ngrok.connect(port);
-    } catch (e) {
-      return logger.error(e);
+  // Start your app.
+  app.listen(port, host, async err => {
+    if (err) {
+      return logger.error(err.message);
     }
-    logger.appStarted(port, prettyHost, url);
-  } else {
-    logger.appStarted(port, prettyHost);
-  }
+  
+    // Connect to ngrok in dev mode
+    if (ngrok) {
+      let url;
+      try {
+        url = await ngrok.connect(port);
+      } catch (e) {
+        return logger.error(e);
+      }
+      logger.appStarted(port, prettyHost, url);
+    } else {
+      logger.appStarted(port, prettyHost);
+    }
+  });
 });
