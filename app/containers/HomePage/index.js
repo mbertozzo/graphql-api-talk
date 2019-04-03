@@ -16,6 +16,8 @@ import messages from './messages';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
+import styles from './styles.module.scss';
+
 const _getPosts = gql `
   query {
     posts {
@@ -35,7 +37,7 @@ const HomePage = () => (
       if (error) return `Error! ${error.message}`;
 
       return (
-        <div>
+        <div className={styles.wrapper}>
           {data.posts.map((post, key) => <p {...{key}}>{post.title}</p>)}
         </div>
       );
