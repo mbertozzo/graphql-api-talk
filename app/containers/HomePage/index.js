@@ -9,9 +9,11 @@
  * the linting exception.
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+
+import cx from 'classnames';
 
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -37,9 +39,24 @@ const HomePage = () => (
       if (error) return `Error! ${error.message}`;
 
       return (
-        <div className={styles.wrapper}>
-          {data.posts.map((post, key) => <p {...{key}}>{post.title}</p>)}
-        </div>
+        <Fragment>
+          <div className={cx(styles.wrapper, styles.header)}>
+            <div>Post Title</div>
+            <div>Post Author Name</div>
+          </div>
+
+          
+          {data.posts.map((post, key) => (
+            <div className={styles.wrapper} {...{key}}>
+            <div>
+              {post.title}
+            </div>
+            <div>
+              {post.author.firstName}
+            </div>
+            </div>
+          ))}
+        </Fragment>
       );
     }}
   </Query>

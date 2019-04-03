@@ -1,5 +1,17 @@
-$base-color: #eee;
+$base-color: #cecece;
 
 .wrapper {
-  background-color: $base-color;
+  display: flex;
+  padding: 5px;
+
+  div:first-child {
+    flex: 0 0 500px;
+  }
+}
+
+.header {
+  font-weight: bold;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid $base-color;
 }
