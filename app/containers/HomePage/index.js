@@ -34,9 +34,9 @@ const _getPosts = gql `
 `;
 
 /* eslint-disable react/prefer-stateless-function */
-const HomePage = () => (
+const HomePage = (props) => (
   <Fragment>
-    <Query query={_getPosts}>
+    <Query query={_getPosts} fetchPolicy='cache-and-network'>
       {({ loading, error, data }) => {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
