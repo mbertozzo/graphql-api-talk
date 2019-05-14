@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 
 import styles from './styles.module.scss';
 
@@ -30,6 +30,15 @@ const _getPosts = gql `
       author {
         firstName
       }
+    }
+  }
+`;
+
+const _getAuthors = gql `
+  query {
+    authors {
+      id
+      firstName
     }
   }
 `;
@@ -63,13 +72,27 @@ const AddPost = (props) => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <input
-              type="text"
+
+            <select
               name="authorId"
-              placeholder="Author ID"
               value={authorId}
               onChange={(e) => setAuthorId(e.target.value)}
-            />
+            >
+              <option value="">Select Author</option>
+
+              <Query query={_getAuthors} fetchPolicy='cache-and-network'>
+                {({ loading, error, data }) => {
+                  if (loading) return <option value="">Loading...</option>
+                  if (error) return <option value="">Error.</option>
+
+                  return (
+                    data.authors.map((item, key) => <option value={item.id} {...{key}}>{item.firstName}</option>)
+                  )
+
+                }}
+              </Query>
+
+            </select>
 
             <button 
               className={styles.action}

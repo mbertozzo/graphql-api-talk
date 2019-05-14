@@ -1,13 +1,28 @@
-.form input, .action {
+.form input,
+.form select,
+.action {
   padding: 7px;
   border: 1px solid #000;
   margin: 20px 0 0 5px;
   font-size: 12px;
   transition: all ease .6s;
+  -webkit-appearance:none;
+  border-radius: 0px;
+  width: 180px;
 
   &:hover {
     background-color: #cecece;
   }
+}
+
+.form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
 }
 
 .action {
