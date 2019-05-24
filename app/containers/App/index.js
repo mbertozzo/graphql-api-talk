@@ -7,22 +7,32 @@
  *
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
-import HomePage from 'containers/HomePage';
+import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-
+import LocaleToggle from 'containers/LocaleToggle';
 import GlobalStyle from '../../global-styles';
+
+import styles from './styles.module.scss';
 
 export default function App() {
   return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+    <Fragment>
+      <div className={styles.topBar}>
+        <FormattedMessage {...messages.language} />
+        <LocaleToggle />
+      </div>
+      <div className={styles.wrapper}>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </div>
       <GlobalStyle />
-    </div>
+    </Fragment>
   );
 }

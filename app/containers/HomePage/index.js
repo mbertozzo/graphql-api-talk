@@ -15,53 +15,40 @@ import messages from './messages';
 
 import cx from 'classnames';
 
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-import AddPost from 'components/HomePage/AddPost';
+import AddPost from 'components/AddPost';
 
 import styles from './styles.module.scss';
 
-const _getPosts = gql `
-  query {
-    posts {
-      title
-      author {
-        firstName
-      }
-    }
-  }
-`;
+import { _getPosts } from 'api/queries';
 
 /* eslint-disable react/prefer-stateless-function */
 const HomePage = (props) => (
   <Fragment>
+    <div className={cx(styles.wrapper, styles.header)}>
+      <div><FormattedMessage {...messages.postTitle} /></div>
+      <div><FormattedMessage {...messages.postAuthor} /></div>
+    </div>
+
     <Query query={_getPosts} fetchPolicy='cache-and-network'>
       {({ loading, error, data }) => {
-        if (loading) return 'Loading...';
-        if (error) return `Error! ${error.message}`;
+        if (loading) return <FormattedMessage {...messages.loading} />;
+        if (error) return <FormattedMessage {...messages.error} values={{ msg: error.message }} />;
 
-        return (
-          <Fragment>
-            <div className={cx(styles.wrapper, styles.header)}>
-              <div>Post Title</div>
-              <div>Post Author Name</div>
-            </div>
-
-            
-            {data.posts.map((post, key) => (
-              <div className={styles.wrapper} {...{key}}>
+        return (         
+          data.posts.map((post, key) => (
+            <div className={styles.wrapper} {...{key}}>
               <div>
                 {post.title}
               </div>
               <div>
                 {post.author.firstName}
               </div>
-              </div>
-            ))}
-
-          </Fragment>
+            </div>
+          ))
         );
+        
       }}
     </Query>
 

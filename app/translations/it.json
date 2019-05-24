@@ -1,0 +1,16 @@
+{
+  "app.components.AddPost.author": "Seleziona Autore",
+  "app.components.AddPost.content": "Contenuto",
+  "app.components.AddPost.cto": "Clicca per aggiungere",
+  "app.components.AddPost.error": "Ops, si è verificato un errore",
+  "app.components.AddPost.loading": "Caricamento in corso...",
+  "app.components.AddPost.title": "Titolo",
+  "app.components.App.language": "Scegli lingua",
+  "app.components.HomePage.error": "Ops, si è verificato un errore: {msg}",
+  "app.components.HomePage.loading": "Caricamento in corso",
+  "app.components.HomePage.postAuthor": "Autore Post",
+  "app.components.HomePage.postTitle": "Titolo Post",
+  "app.containers.NotFoundPage.header": "Pagina non trovata!",
+  "boilerplate.containers.LocaleToggle.en": "en",
+  "boilerplate.containers.LocaleToggle.it": "it"
+}

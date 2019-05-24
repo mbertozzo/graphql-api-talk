@@ -1,1 +1,16 @@
-[]
+{
+  "app.components.AddPost.author": "Select Author",
+  "app.components.AddPost.content": "Content",
+  "app.components.AddPost.cto": "Click to Add",
+  "app.components.AddPost.error": "Ops, an error occurred.",
+  "app.components.AddPost.loading": "Loading, please wait...",
+  "app.components.AddPost.title": "Title",
+  "app.components.App.language": "Choose language",
+  "app.components.HomePage.error": "Ops, an error occurred: {msg}",
+  "app.components.HomePage.loading": "Loading...",
+  "app.components.HomePage.postAuthor": "Post Author",
+  "app.components.HomePage.postTitle": "Post Title",
+  "app.containers.NotFoundPage.header": "This is the NotFoundPage container!",
+  "boilerplate.containers.LocaleToggle.en": "en",
+  "boilerplate.containers.LocaleToggle.it": "it"
+}
