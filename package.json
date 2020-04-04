@@ -80,7 +80,7 @@
     "ip": "1.1.5",
     "loadable-components": "2.2.3",
     "lodash": "4.17.13",
-    "minimist": "1.2.0",
+    "minimist": "1.2.3",
     "mysql2": "^1.6.5",
     "prop-types": "15.6.2",
     "react": "16.8.6",
