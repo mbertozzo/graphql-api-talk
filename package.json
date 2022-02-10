@@ -151,7 +151,7 @@
     "lodash.times": "^4.3.2",
     "ngrok": "3.1.0",
     "node-plop": "0.16.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "null-loader": "0.1.1",
     "offline-plugin": "5.0.5",
     "plop": "2.1.0",
